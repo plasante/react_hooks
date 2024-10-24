@@ -1,36 +1,31 @@
-import {useState, useEffect} from "react";
+import { useState, useCallback } from "react";
+import Title from "./components/Title.jsx";
+import Count from "./components/Count.jsx";
+import CountBtn from "./components/CountBtn.jsx";
+import Age from "./components/Age.jsx";
+import AgeBtn from "./components/AgeBtn.jsx";
 
 const App = () => {
     const [count, setCount] = useState(0);
-    const [animal , setAnimal] = useState('dog');
+    const [age, setAge] = useState(10);
 
-    const plusOne = () => setCount(count+1);
-    const minusOne = () => setCount(count-1);
-    const resetCount = () => setCount(0);
+    const handleCount = useCallback(() => {
+        setCount(count+1);
+    },[count])
 
-    useEffect(() => {
-        console.log('Go to server fetch data only when component loads');
-    },[])
-
-    // useEffect(() => {
-    //     console.log('Listening to count changes: ' + count);
-    // },[count])
-    //
-    // useEffect(() => {
-    //     console.log('Listening to animal changes: ' + animal);
-    // },[animal])
+    const handleAge = useCallback( () => {
+        setAge(age+1);
+    }, [age])
 
     return (
         <div>
-            <h3>Counter {count}</h3>
-            <button onClick={plusOne}>+1</button>
-            <button onClick={minusOne}>-1</button>
-            <button onClick={resetCount}>Reset</button>
-            <h2>{animal}</h2>
-            <button onClick={() => setAnimal('cat')}>Change animal</button>
+            <Title/>
+            <Count count={count} />
+            <CountBtn handleCount={handleCount} />
+            <Age age={age} />
+            <AgeBtn handleAge={handleAge} />
         </div>
     )
-        ;
 }
 
 export default App;
